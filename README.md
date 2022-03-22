@@ -35,3 +35,6 @@ Connect via ssh to the instance to access the command line and run the following
    disable the load balancer. Choose not to install the agent. This was done in the [ec2 setup](#ec2-instance). Add
    the service role ``ServiceRoleForCodeDeploy``. This role will (currently) be used to access the ec2 instance. In further
    revision this role should be tailored to the specifig ec2 instance and only grant access to one instance.
+
+## Resources
+[appspec file](https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file.html);
