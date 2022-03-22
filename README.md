@@ -11,19 +11,18 @@ Connect via ssh to the instance to access the command line and run the following
         curl -fsSL https://rpm.nodesource.com/setup_14.x | sudo bash -
         sudo yum install -y nodejs
         ```
-  3. [Create a Personal Access Token](https://github.com/settings/tokens) with the `read:packages` scopes.
-  4. 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
-  5. Add the token to the npm config
+  3. [Create a Personal Access Token](https://github.com/settings/tokens) with the `read:packages` scopes. 
+  4. Add the token to the npm config
         ````shell
         npm config set //npm.pkg.github.com/:_authToken <<TOKEN>>
         ````
      Steps 3 and 4 might need to be repeated if you want the update the internal imagineon packages (`flakejs` and `coldwave-backend-environment`)
      and the token is invalid or timed out.
-  6. Install git
+  5. Install git
         ````shell
          sudo yum install -y git
         ````
-  7. Create an ssh key for github
+  6. Create an ssh key for github
         ````shell
         ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
         eval "$(ssh-agent -s)"
@@ -31,7 +30,7 @@ Connect via ssh to the instance to access the command line and run the following
         cat .ssh/id_rsa.pub
         ````
      Copy the file content and add the new ssh key at github to your [profile](https://github.com/settings/keys).
-  8. Get the code. If you simply want to clone a repository, run
+  7. Get the code. If you simply want to clone a repository, run
         ````shell
         git clone <<Repository>>
         ````
@@ -49,19 +48,19 @@ Connect via ssh to the instance to access the command line and run the following
         git remote add -f origin git@github.com:imagineon/coldwave-backend-bundles.git
         git pull origin main
         ````
-  9. Install top level dependencies
+  8. Install top level dependencies
         ````shell
         npm install
         ````
-  10. Install bundle dependencies and compile
-        ````shell
-        npx gulp compile --client=<<DIRECTORY_NAME>>
-        ````
-  11. Install the nodejs process manager pm2
+  9. Install bundle dependencies and compile
+       ````shell
+       npx gulp compile --client=<<DIRECTORY_NAME>>
+       ````
+  10. Install the nodejs process manager pm2
         ````shell
         sudo npm install pm2 -g
         ````
-  12. Start the process from the correct directory
+  11. Start the process from the correct directory
         ````shell
         cd bundles/<<DIRECTORY_NAME>
         pm2 start dist/index.js
