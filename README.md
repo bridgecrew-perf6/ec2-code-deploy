@@ -1,9 +1,7 @@
-# EC2 Cookbook
-
-
+# Coldwave EC2 Deployment Cookbook
 ## Setup
 ### EC2 Instance
-Connect via ssh to the instance to access the command line and run the following commands to setup the instance.
+Connect via ssh to the instance to access the command line and run the following commands to set up the instance.
   1. Update yum. Optional, but considered best practices.
         ```shell
         sudo yum update -y
@@ -22,17 +20,18 @@ Connect via ssh to the instance to access the command line and run the following
         sudo ./install auto
         sudo service codedeploy-agent status
         ```
-  You should see a message in the form of ``The AWS CodeDeploy agent is running as PID XXXX``  
-
-### DEBUGGING 
-```shell
-[ec2-user@ip-10-0-1-6 ~]$ sudo iptables -L -v
-Chain INPUT (policy ACCEPT 76 packets, 5680 bytes)
- pkts bytes target     prot opt in     out     source               destination
-
-Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
- pkts bytes target     prot opt in     out     source               destination
-
-Chain OUTPUT (policy ACCEPT 72 packets, 4566 bytes)
- pkts bytes target     prot opt in     out     source               destination
-```
+        You should see a message in the form of ``The AWS CodeDeploy agent is running as PID XXXX``  
+  
+### AWS CodeDeploy Service
+1. Navigate to the CodeDeploy AWS service
+2. Create an application with ``EC2`` as compute platform (_This step requires authorization to perform action codedeploy:CreateApplication_).
+   The name should follow our standard and end with `-cd`, short for `CodeDeploy`.
+3. Create a deployment group. The name should follow our standard and end with `-dg`, short for `DeploymentGroup`.
+   For _Deployment type_ choose `in place`. This is subject to change since this will result in down-time of the application.
+   However, it is the least invasiv method for now and deployments could be made outside of working hours. The other option is
+   a blue/green deployment which includes a load balancer. You want to add an ``Amazon EC2 instance``-tag which should
+   be the name of the EC2 instance. If naming was done properly it should be the name of the deployment group but ending with `-ec2`.
+   The key for the tag is `name`. Choose `OneAtATime` deployment (we currently are running a single instance anyway) and
+   disable the load balancer. Choose not to install the agent. This was done in the [ec2 setup](#ec2-instance). Add
+   the service role ``ServiceRoleForCodeDeploy``. This role will (currently) be used to access the ec2 instance. In further
+   revision this role should be tailored to the specifig ec2 instance and only grant access to one instance.
