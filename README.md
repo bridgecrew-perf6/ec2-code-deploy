@@ -33,7 +33,7 @@ Connect via ssh to the instance to access the command line and run the following
         ssh-add ~/.ssh/id_rsa
         cat .ssh/id_rsa.pub
         ````
-     Copy the file content and add the new ssh key at github to your [profile](https://github.com/settings/keys).
+     Copy the console output of the last command and add the new ssh key at github to your [profile](https://github.com/settings/keys).
   8. Get the code. If you simply want to clone a repository, run
         ````shell
         git clone <<Repository>>
@@ -60,9 +60,14 @@ Connect via ssh to the instance to access the command line and run the following
         ````shell
         npx gulp compile --client=<<DIRECTORY_NAME>>
         ````
-  11. Start the process from the correct directory
+  11. Update required environment parameter if any
        ````shell
        cd bundles/<<DIRECTORY_NAME>
+       nano app.config.js
+       ````
+      Change required environment parameter. The database name should be `xxxx-coldwave-db`
+  12. Start the process from the current directory
+       ````shell
        pm2 start app.config.js
        ````
 
