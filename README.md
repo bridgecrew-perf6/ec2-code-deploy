@@ -63,36 +63,9 @@ Connect via ssh to the instance to access the command line and run the following
   11. Start the process from the correct directory
        ````shell
        cd bundles/<<DIRECTORY_NAME>
-       pm2 start dist/index.js
+       pm2 start app.config.js
        ````
 
-# KINDA DEPRECATED
-__The following guide is most likely not applicable / out-of-date because we use a different form of code deployment__
-
-### Setup
-3. Install [AWS CodeDeploy Agent](https://docs.aws.amazon.com/codedeploy/latest/userguide/codedeploy-agent-operations-install-linux.html)
-      ```shell
-      sudo yum install ruby
-      sudo yum install wget
-      wget https://aws-codedeploy-eu-central-1.s3.eu-central-1.amazonaws.com/latest/install
-      chmod +x ./install
-      sudo ./install auto
-      sudo service codedeploy-agent status
-      ```
-   You should see a message in the form of ``The AWS CodeDeploy agent is running as PID XXXX``
-### AWS CodeDeploy Service
-1. Navigate to the CodeDeploy AWS service
-2. Create an application with ``EC2`` as compute platform (_This step requires authorization to perform action codedeploy:CreateApplication_).
-   The name should follow our standard and end with `-cd`, short for `CodeDeploy`.
-3. Create a deployment group. The name should follow our standard and end with `-dg`, short for `DeploymentGroup`.
-   For _Deployment type_ choose `in place`. This is subject to change since this will result in down-time of the application.
-   However, it is the least invasiv method for now and deployments could be made outside of working hours. The other option is
-   a blue/green deployment which includes a load balancer. You want to add an ``Amazon EC2 instance``-tag which should
-   be the name of the EC2 instance. If naming was done properly it should be the name of the deployment group but ending with `-ec2`.
-   The key for the tag is `name`. Choose `OneAtATime` deployment (we currently are running a single instance anyway) and
-   disable the load balancer. Choose not to install the agent. This was done in the [ec2 setup](#ec2-instance). Add
-   the service role ``ServiceRoleForCodeDeploy``. This role will (currently) be used to access the ec2 instance. In further
-   revision this role should be tailored to the specifig ec2 instance and only grant access to one instance.
-
-## Resources
-[appspec file](https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file.html);
+## Future Features
+* Create a script that automates the commands above. One drawback of the script is, that if it encounters errors, you can only run the complete script again. This is why I currently favor the more labor-intensive approach while I am learning the ins and outs of the ec2 image.
+* Create an image where everything is predefined and preinstalled. Then add a config file (needs to be generated somehow) to the deployment which should run the backend.
