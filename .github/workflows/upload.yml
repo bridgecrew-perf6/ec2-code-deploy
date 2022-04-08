@@ -24,7 +24,7 @@ jobs:
         run: mv ./scripts ./bundles
 
       - name: Move bundle
-        run: mv ./bundles/${{BUNDLE}} ./bundle
+        run: mv ./bundles/$BUNDLE ./bundle
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
