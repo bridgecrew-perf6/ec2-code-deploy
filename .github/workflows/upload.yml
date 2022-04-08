@@ -29,15 +29,15 @@ jobs:
       - name: Move bundle
         run: mv ./bundles/$BUNDLE/* ./bundle/app/
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - uses: shallwefootball/s3-upload-action@master
+        name: Upload bundle
+        id: s3
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-central-1
-
-      - name: Upload Bundle
-        run: aws s3 sync ./bundle s3://coldwave-bundles/$BUNDLE
+          aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+          aws_bucket: 'coldwave-bundles'
+          source_dir: './bundle'
+          destination_dir: ${{BUNDLE}}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
