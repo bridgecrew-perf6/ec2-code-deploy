@@ -2,8 +2,8 @@ name: Generate bundle
 on:
   push:
     branches: [ main ]
-    paths:
-      - 'bundles/test/**'
+    #paths:
+    #  - 'bundles/test/**'
 env:
   BUNDLE: "test"
 
