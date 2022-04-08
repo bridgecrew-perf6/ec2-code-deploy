@@ -6,3 +6,4 @@ mkdir ./bundle/app
 mv ./scripts ./bundle
 mv ./app.config.js ./bundle
 mv ./bundles/$BUNDLE/* ./bundle/app/
+mv ./appspec.yml ./bundle

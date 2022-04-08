@@ -26,6 +26,9 @@ jobs:
       - name: Move node-deamon config
         run: mv ./app.config.js ./bundle
 
+      - name: Move appspec.yml config
+        run: mv ./appspec.yml ./bundle
+
       - name: Move bundle
         run: mv ./bundles/$BUNDLE/* ./bundle/app/
 
