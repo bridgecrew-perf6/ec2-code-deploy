@@ -21,7 +21,7 @@ jobs:
         run: mv ./scripts ./bundle
 
       - name: Move node-deamon config
-        run: mv ./scripts ./bundles
+        run: mv ./app.config.js ./bundles
 
       - name: Move bundle
         run: mv ./bundles/$BUNDLE ./bundle
