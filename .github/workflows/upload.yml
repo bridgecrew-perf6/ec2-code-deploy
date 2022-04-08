@@ -1,0 +1,33 @@
+name: Generate bundle
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'bundles/test/**'
+env:
+  BUNDLE: "test"
+
+jobs:
+  generate-bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Create bundle directory
+        run: mkdir bundle
+
+      - name: Move scripts
+        run: mv ./scripts ./bundle
+
+      - name: Move node-deamon config
+        run: mv ./scripts ./bundles
+
+      - name: Move bundle
+        run: mv ./bundles/${{BUNDLE}} ./bundle
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: bundle
+          path: ./bundle
