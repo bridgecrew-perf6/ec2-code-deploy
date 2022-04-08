@@ -1,3 +1,5 @@
+const argv = require('yargs').argv;
+const archiver = require("archiver");
 const {dest, series, src, task} = require("gulp");
 const eslint = require("gulp-eslint")
 const fs = require("fs");
@@ -20,6 +22,13 @@ function getGlob(){
     }
 }
 
+function getClientName(){
+    const client = argv.client;
+    if (client === undefined) throw new Error("Client variable must be set!")
+    return client;
+}
+
+
 function lint() {
     return src(getGlob())
         .pipe(eslint())
@@ -37,7 +46,7 @@ function compile() {
 
 async function bundle(done){
     const client = getClientName()
-    const path = getBundlePath();
+    const path = "./bundle"
     const time = moment().format("YY.MM.DD_HH-mm");
     const filename = `build/coldwave-${client}-${time}.zip`;
     console.log(`Creating bundle "${filename}"`);
@@ -56,6 +65,7 @@ async function bundle(done){
         zip.pipe(out);
 
     //Default files
+    //TODO RECURSIVE (so we can skip files)
     const files = fs.readdirSync(path);
     for(const file of files){
         if(IGNORED_FILES.includes(file)) {
@@ -71,4 +81,4 @@ async function bundle(done){
     await zip.finalize();
 }
 
-task("compile", series(lint, compile));
+task("bundle", series(lint, compile, bundle));
