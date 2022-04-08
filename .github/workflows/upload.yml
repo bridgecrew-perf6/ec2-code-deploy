@@ -37,7 +37,7 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
           aws_bucket: 'coldwave-bundles'
           source_dir: './bundle'
-          destination_dir: ${{BUNDLE}}
+          destination_dir: $BUNDLE
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
