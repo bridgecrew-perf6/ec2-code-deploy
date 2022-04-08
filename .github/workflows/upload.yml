@@ -17,6 +17,9 @@ jobs:
       - name: Create bundle directory
         run: mkdir bundle
 
+      - name: Create app directory
+        run: mkdir ./bundle/app
+
       - name: Move scripts
         run: mv ./scripts ./bundle
 
