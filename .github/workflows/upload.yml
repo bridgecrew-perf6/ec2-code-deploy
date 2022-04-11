@@ -29,11 +29,28 @@ jobs:
       - name: Move appspec.yml config
         run: mv ./appspec.yml ./bundle
 
+      - name: Move npm config
+        run: mv ./.npmrc ./bundle
+
       - name: Move bundle
         run: mv ./bundles/$BUNDLE/* ./bundle/app/
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: bundle
-          path: ./bundle
+      - name: Create .zip file
+        run: gulp bundle --client $BUNDLE
+
+      - name: Get .zip file name
+        run: |
+          echo "::set-output name=BUNDLE_FILE_PATH::build/`ls ../../build`"
+          echo "::set-output name=BUNDLE_FILE_NAME::`ls ../../build`"
+        id: files
+
+      - name: Test file names
+        run: |
+          echo ${{ steps.files.outputs.BUNDLE_FILE_NAME }}
+          echo ${{ steps.files.outputs.BUNDLE_FILE_PATH }}
+
+      #- name: Upload artifact
+      #  uses: actions/upload-artifact@v2
+      #  with:
+      #    name: bundle
+      #    path: ./bundle
