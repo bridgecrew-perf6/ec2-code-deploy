@@ -74,4 +74,4 @@ jobs:
           aws deploy create-deployment \
             --application-name ccsc-coldwave-cd \
             --deployment-group-name ccsc-coldwave-dg \
-            --s3-location s3://coldwave-bundles/$BUNDLE/${{ steps.files.outputs.BUNDLE_FILE_NAME }}
+            --s3-location bucket=coldwave-bundles,bundleType=zip,key=$BUNDLE/${{ steps.files.outputs.BUNDLE_FILE_NAME }}
