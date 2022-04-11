@@ -67,3 +67,11 @@ jobs:
 
       - name: Upload to s3
         run: aws s3 sync ./build s3://coldwave-bundles/$BUNDLE
+
+      - name: Run AWS CodeDeploy
+        id: deploy
+        run: |
+          aws deploy create-deployment \
+            --application-name ccsc-coldwave-cd \
+            --deployment-group-name ccsc-coldwave-dg \
+            --s3-location s3://coldwave-bundles/$BUNDLE/${{ steps.files.outputs.BUNDLE_FILE_NAME }}
