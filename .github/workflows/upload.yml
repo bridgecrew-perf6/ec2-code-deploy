@@ -52,10 +52,10 @@ jobs:
           echo "::set-output name=BUNDLE_FILE_NAME::`ls ./build`"
         id: files
 
-      - name: Test file names
-        run: |
-          echo ${{ steps.files.outputs.BUNDLE_FILE_NAME }}
-          echo ${{ steps.files.outputs.BUNDLE_FILE_PATH }}
+      ##- name: Test file names
+      ##  run: |
+      ##    echo ${{ steps.files.outputs.BUNDLE_FILE_NAME }}
+      ##    echo ${{ steps.files.outputs.BUNDLE_FILE_PATH }}
 
       # At this point we gathered all the files and information and are ready to upload
       - name: Configure AWS credentials
@@ -66,4 +66,4 @@ jobs:
           aws-region: eu-central-1
 
       - name: Upload to s3
-        run: aws s3 sync ./build s3://coldwave-bundles/test
+        run: aws s3 sync ./build s3://coldwave-bundles/`$BUNDLE`
