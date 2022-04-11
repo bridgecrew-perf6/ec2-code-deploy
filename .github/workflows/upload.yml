@@ -37,8 +37,8 @@ jobs:
       - name: Move appspec.yml config
         run: mv ./appspec.yml ./bundle
 
-      - name: Move npm config
-        run: mv ./.npmrc ./bundle
+      - name: Create npm config
+        run: echo "registry=https://npm.pkg.github.com/imagineon" > ./bundle/.npmrc
 
       - name: Move bundle
         run: mv ./bundles/$BUNDLE/* ./bundle/app/
@@ -57,8 +57,8 @@ jobs:
           echo ${{ steps.files.outputs.BUNDLE_FILE_NAME }}
           echo ${{ steps.files.outputs.BUNDLE_FILE_PATH }}
 
-      #- name: Upload artifact
-      #  uses: actions/upload-artifact@v2
-      #  with:
-      #    name: bundle
-      #    path: ./bundle
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: bundle
+          path: ${{ steps.files.outputs.BUNDLE_FILE_PATH }}
