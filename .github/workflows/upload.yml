@@ -48,8 +48,8 @@ jobs:
 
       - name: Get .zip file name
         run: |
-          echo "::set-output name=BUNDLE_FILE_PATH::build/`ls ../../build`"
-          echo "::set-output name=BUNDLE_FILE_NAME::`ls ../../build`"
+          echo "::set-output name=BUNDLE_FILE_PATH::build/`ls ./build`"
+          echo "::set-output name=BUNDLE_FILE_NAME::`ls ./build`"
         id: files
 
       - name: Test file names
