@@ -1,0 +1,7 @@
+{
+  "name": "trla",
+  "author": "ImagineOn GmbH",
+  "dependencies": {
+    "@imagineon/coldwave-backend-environment": "^3.6.3"
+  }
+}
